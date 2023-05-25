@@ -16,12 +16,10 @@ import java.util.NoSuchElementException;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderRepository orderRepo;
-    private final CustomerRepository customerRepo;
 
     @Autowired
-    public OrderController(OrderRepository orderRepo, CustomerRepository customerRepo) {
+    public OrderController(OrderRepository orderRepo) {
         this.orderRepo = orderRepo;
-        this.customerRepo = customerRepo;
     }
 
     @GetMapping
@@ -56,8 +54,8 @@ public class OrderController {
         if (patch.getAmount() != null) {
             order.setAmount(patch.getAmount());
         }
-        if (patch.getCustomer() != null) {
-            order.setCustomer(patch.getCustomer());
+        if (patch.getCustomerId() != null) {
+            order.setCustomerId(patch.getCustomerId());
         }
         return orderRepo.save(order);
     }
@@ -69,9 +67,7 @@ public class OrderController {
     }
 
     public Order createOrder(OrderForm orderForm) {
-        Customer fullCustomer = customerRepo.findById(orderForm.getCustomerId())
-                .orElseThrow(() -> new NoSuchElementException("such customer not found"));
-        return new Order(orderForm.getId(), orderForm.getItem(), orderForm.getAmount(), fullCustomer);
+        return new Order(orderForm.getId(), orderForm.getItem(), orderForm.getAmount(), orderForm.getCustomerId());
     }
 
 }

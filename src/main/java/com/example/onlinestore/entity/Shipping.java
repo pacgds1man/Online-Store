@@ -11,15 +11,21 @@ public class Shipping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
-    @OneToOne
-    @JoinColumn(name = "order_id")
+
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Order.class, fetch = FetchType.EAGER)
     private Order order;
 
-    public Shipping(Long id, Status status, Order orderId) {
+    @Column(name = "order_id")
+    private Long orderId;
+
+    public Shipping(Long id, Status status, Long orderId) {
         this.id = id;
         this.status = status;
-        this.order = orderId;
+        this.orderId = orderId;
     }
 
     public static enum Status {

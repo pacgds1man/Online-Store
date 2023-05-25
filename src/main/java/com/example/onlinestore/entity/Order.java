@@ -14,14 +14,16 @@ public class Order {
     private Long id;
     private String item;
     private Integer amount;
-    @OneToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Customer.class, fetch = FetchType.EAGER)
     private Customer customer;
+    @Column(name = "customer_id")
+    private Long customerId;
 
-    public Order(Long id, String item, Integer amount, Customer customer) {
+    public Order(Long id, String item, Integer amount, Long customerId) {
         this.id = id;
         this.item = item;
         this.amount = amount;
-        this.customer = customer;
+        this.customerId = customerId;
     }
 }

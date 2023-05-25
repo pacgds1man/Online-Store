@@ -8,6 +8,7 @@ import com.example.onlinestore.repository.ShippingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -15,12 +16,10 @@ import java.util.NoSuchElementException;
 @RequestMapping("/shippings")
 public class ShippingController {
     private ShippingRepository shippingRepo;
-    private OrderRepository orderRepo;
 
     @Autowired
-    public ShippingController(ShippingRepository shippingRepo, OrderRepository orderRepo) {
+    public ShippingController(ShippingRepository shippingRepo) {
         this.shippingRepo = shippingRepo;
-        this.orderRepo = orderRepo;
     }
 
     @GetMapping
@@ -33,29 +32,28 @@ public class ShippingController {
         return shippingRepo.findById(id).get();
 
     }
-
+    @RolesAllowed("ADMIN")
     @PostMapping
     public Shipping newShipping(@RequestBody ShippingForm shippingForm) {
         return shippingRepo.save(createShipping(shippingForm));
     }
 
+    @RolesAllowed("ADMIN")
     @PatchMapping("/{id}")
-    public Shipping patchShipping(@PathVariable Long id, ShippingForm shippingForm) {
+    public Shipping patchShipping(@PathVariable Long id,@RequestBody ShippingForm shippingForm) {
         Shipping shipping = shippingRepo.findById(id).get();
         Shipping patch = createShipping(shippingForm);
-        if (patch.getOrder() != null) {
-            shipping.setOrder(patch.getOrder());
+        if (patch.getOrderId() != null) {
+            shipping.setOrderId(patch.getOrderId());
         }
         if (patch.getStatus() != null) {
             shipping.setStatus(patch.getStatus());
         }
-        return shipping;
+        return shippingRepo.save(shipping);
     }
 
     private Shipping createShipping(ShippingForm shippingForm) {
-        Order fullOrder = orderRepo.findById(shippingForm.getOrderId())
-                .orElseThrow(() -> new NoSuchElementException("no such order found"));
-        return new Shipping(shippingForm.getId(), shippingForm.getStatus(), fullOrder);
+        return new Shipping(shippingForm.getId(), shippingForm.getStatus(), shippingForm.getOrderId());
     }
 }
 
