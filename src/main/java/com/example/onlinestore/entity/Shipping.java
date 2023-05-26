@@ -3,6 +3,7 @@ package com.example.onlinestore.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -13,6 +14,7 @@ public class Shipping {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Status status;
 
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
@@ -20,6 +22,7 @@ public class Shipping {
     private Order order;
 
     @Column(name = "order_id")
+    @NotNull
     private Long orderId;
 
     public Shipping(Long id, Status status, Long orderId) {

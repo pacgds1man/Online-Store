@@ -26,7 +26,7 @@ public class ShippingController {
     }
 
     @GetMapping("/{id}")
-    private Shipping findById(@PathVariable Long id) {
+    public Shipping findById(@PathVariable Long id) {
         return shippingRepo.findById(id).get();
 
     }

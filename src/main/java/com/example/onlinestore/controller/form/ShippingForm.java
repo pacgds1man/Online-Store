@@ -10,7 +10,7 @@ public class ShippingForm {
     private Long id;
     @NotNull
     private Shipping.Status status;
-    @NotNull()
+    @NotNull
     private Long orderId;
 
 }
