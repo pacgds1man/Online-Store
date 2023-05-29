@@ -21,7 +21,7 @@ public class ShippingController {
     }
 
     @GetMapping
-    public List<Shipping> findAllShipping() {
+    public List<Shipping> findAll() {
         return shippingRepo.findAll();
     }
 
@@ -33,13 +33,13 @@ public class ShippingController {
 
     @RolesAllowed("ADMIN")
     @PostMapping
-    public Shipping newShipping(@RequestBody @Valid ShippingForm shippingForm) {
+    public Shipping create(@RequestBody @Valid ShippingForm shippingForm) {
         return shippingRepo.save(toShipping(shippingForm));
     }
 
     @RolesAllowed("ADMIN")
     @PatchMapping("/{id}")
-    public Shipping patchShipping(@PathVariable Long id, @RequestBody ShippingForm shippingForm) {
+    public Shipping patch(@PathVariable Long id, @Valid @RequestBody ShippingForm shippingForm) {
         Shipping shipping = shippingRepo.findById(id).get();
 
         if (shipping.getStatus() != Shipping.Status.ASSEMBLY) {
@@ -48,12 +48,8 @@ public class ShippingController {
         }
 
         Shipping patch = toShipping(shippingForm);
-        if (patch.getOrderId() != null) {
             shipping.setOrderId(patch.getOrderId());
-        }
-        if (patch.getStatus() != null) {
             shipping.setStatus(patch.getStatus());
-        }
         return shippingRepo.save(shipping);
     }
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PrePersist;
 import java.util.List;
 
 @RestController
@@ -20,23 +19,23 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> getCustomer() {
+    public List<Customer> findAll() {
         return customerRepo.findAll();
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable Long id) {
+    public Customer findById(@PathVariable Long id) {
         return customerRepo.findById(id).get();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer newCustomer(@RequestBody Customer customer) {
+    public Customer create(@RequestBody Customer customer) {
         return customerRepo.save(customer);
     }
 
     @PutMapping("/{id}")
-    public Customer chengeCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+    public Customer change(@PathVariable Long id, @RequestBody Customer customer) {
         if (customer.getId() == null) {
             customer.setId(id);
         }
@@ -44,7 +43,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/{id}")
-    public Customer patchCustomer(@PathVariable Long id, @RequestBody Customer patch) {
+    public Customer patch(@PathVariable Long id, @RequestBody Customer patch) {
         Customer customer = customerRepo.findById(id).get();
         if (patch.getFirstname() != null) {
             customer.setFirstname(patch.getFirstname());
@@ -63,7 +62,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCustomer(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         customerRepo.deleteById(id);
     }
 }
