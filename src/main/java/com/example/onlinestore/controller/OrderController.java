@@ -3,6 +3,7 @@ package com.example.onlinestore.controller;
 import com.example.onlinestore.controller.form.OrderForm;
 import com.example.onlinestore.entity.Order;
 import com.example.onlinestore.repository.OrderRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
+@SecurityRequirement(name = "basicAuth")
 public class OrderController {
     private final OrderRepository orderRepo;
 

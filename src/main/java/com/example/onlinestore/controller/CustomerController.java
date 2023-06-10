@@ -2,6 +2,7 @@ package com.example.onlinestore.controller;
 
 import com.example.onlinestore.entity.Customer;
 import com.example.onlinestore.repository.CustomerRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
+@SecurityRequirement(name = "basicAuth")
 public class CustomerController {
     private final CustomerRepository customerRepo;
 

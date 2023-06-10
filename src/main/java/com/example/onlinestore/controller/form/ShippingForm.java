@@ -1,9 +1,9 @@
 package com.example.onlinestore.controller.form;
 
 import com.example.onlinestore.entity.Shipping;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 
 @Data
 public class ShippingForm {
