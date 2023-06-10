@@ -10,13 +10,12 @@
 ![Schema](schema.png)
 
 
-- [REST API](#REST API)
+- REST API
     - [OpenAPI Spec](http://localhost:8083/swagger-ui/index.html)
 
 ## Requirements
 * Java 17
-* Docker
-
+* Maven 3.9.1 or above
 
 ## Getting started
 
