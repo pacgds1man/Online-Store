@@ -6,9 +6,9 @@
 [![H2 Database](https://img.shields.io/badge/H2%20Database-orange)](https://www.h2database.com/html/main.html)
 [![Docker](https://img.shields.io/badge/Docker-blue)](https://www.docker.com/)
 
-### This is a RESTfull project - an online store that contains the entities of the customer, order and delivery. It is connected to In Memory database, implemented basic authentication using different roles to access resources
+Online Store - this is RESTful application which is based on Spring Boot, and it processes the entities of the customer, order and shipping. It is connected to H2 In Memory database, implemented basic authentication and authorization with using different roles to access resources.
+Swagger is used for describing application API
 ![Schema](schema.png)
-
 
 - REST API
     - [OpenAPI Spec](http://localhost:8083/swagger-ui/index.html)
@@ -17,28 +17,39 @@
 * Java 17
 * Maven 3.9.1 or above
 
+## Technology list
+
+1. **Spring Boot**
+2. **Spring Web MVC**
+3. **Spring Data JPA**
+4. **Spring Security**
+5. **Maven**
+6. **H2 database**
+7. **Docker**
+8. **Swagger**
+9. **Lombok**
+
 ## Getting started
 
-Clone repository
-
 ```shell
-https://github.com/pacgds1man/Online-Store
+#clone repository
+https://github.com/pacgds1man/Online-Store.git
 ```
 
-## Run the application with the command:
+Run the application with the command:
 
-Maven:
 ```shell
+# Create executable jar file:
 mvn clean install
 ```
 
-
-Create image for Docker
 ```shell
+#create docker image
 docker build -t online-store:0.0.1 .
 ```
-Run the container
+
 ```shell
+#run the docker container
 docker run -d -p 8083:8083 -t online-store:0.0.1
 ```
 The application is running on port 8083.
